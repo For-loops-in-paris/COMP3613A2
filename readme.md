@@ -78,6 +78,56 @@ def create_user_command(username, password):
 
 app.cli.add_command(user_cli) # add the group to the cli
 
+recruiter_cli = AppGroup('recruiter', help='recruiter object commands') 
+
+@recruiter_cli.command('list_jobs')
+@click.argument('recruiter_id')
+def list_recruiter_jobs(recruiter_id):
+    list_created_jobs(recruiter_id)
+
+app.cli.add_command(recruiter_cli)
+
+
+job_cli = AppGroup('job', help='job object commands') 
+
+@job_cli.command('create_job')
+@click.argument('recruiter_id')
+@click.argument("position")
+@click.argument("salary")
+def create_new_job(recruiter_id,position,salary):
+    print(create_job(recruiter_id,position,salary))
+    
+    
+@job_cli.command('view_applicants')
+@click.argument('job_id')
+def list_applicants(job_id):
+    view_applicants(job_id)
+   
+
+app.cli.add_command(job_cli)
+
+applicant_cli = AppGroup('applicant', help='applicant object commands') 
+
+
+@applicant_cli.command('apply_to_job')
+@click.argument('job_id')
+@click.argument('applicant_id')
+def job_apply(job_id,applicant_id):
+    print(apply_to_job(job_id,applicant_id))
+
+
+@applicant_cli.command('view_jobs')
+def job_listing():
+    view_jobs()
+
+@applicant_cli.command('view_applications')
+@click.argument('applicant_id')
+def list_applications(applicant_id):
+    view_applications(applicant_id)
+
+
+app.cli.add_command(applicant_cli)
+
 ```
 
 Then execute the command invoking with flask cli with command name and the relevant parameters
