@@ -27,8 +27,12 @@ def apply_to_job(job_id,applicant_id):
 
 def view_applications(applicant_id):
     applicant = Applicant.query.get(applicant_id)
-    for application in applicant.applications:
-        print(application)
+    
+    if applicant:
+        for application in applicant.applications:
+            print(application)
+    else:
+        print("FAIL")
 
 
     

@@ -6,7 +6,6 @@ class Job(db.Model):
     position = db.Column(db.String(120), nullable=False)
     recruiter_id= db.Column(db.Integer,db.ForeignKey('recruiter.id'))
     salary = db.Column(db.Integer,nullable=False)
-    # applicants = db.Relationship('Application', backref='job')
     
 
     def __init__(self,recruiter_id,position,salary):

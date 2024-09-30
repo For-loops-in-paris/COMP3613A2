@@ -5,7 +5,7 @@ from flask.cli import with_appcontext, AppGroup
 from App.database import db, get_migrate
 from App.models import User
 from App.main import create_app
-from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, create_job , list_created_jobs,apply_to_job, view_jobs, view_applications, create_applicant, create_recruiter,view_applicants, )
+from App.controllers import ( create_user, get_all_users_json, get_all_users, initialize, create_job , list_created_jobs,apply_to_job, view_jobs, view_applications, create_applicant, create_recruiter,view_applicants,)#list_all_applications )
 
 
 # This commands file allow you to create convenient CLI commands for testing controllers
@@ -111,6 +111,11 @@ def job_listing():
 @click.argument('applicant_id')
 def list_applications(applicant_id):
     view_applications(applicant_id)
+
+
+# @applicant_cli.command('list_ap')
+# def list_ap():
+#     list_all_applications()
 
 
 app.cli.add_command(applicant_cli)

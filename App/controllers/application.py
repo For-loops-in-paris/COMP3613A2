@@ -7,7 +7,8 @@ from sqlalchemy.exc import IntegrityError
 from App.database import db
 
 def create_application(job_id,applicant_id):
-    if Job.query.get(job_id) and Applicant.query.get(applicant_id):
+    
+    if Application.query.filter_by(job_id=job_id,applicant_id=applicant_id).first() != None:
         return False
     try:
         application = Application(job_id,applicant_id)
@@ -18,3 +19,7 @@ def create_application(job_id,applicant_id):
         return False
     return True
 
+# def list_all_applications():
+#     app = Application.query.all()
+#     for a in app:
+#         print(a)
