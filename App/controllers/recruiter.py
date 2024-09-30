@@ -6,8 +6,8 @@ def create_recruiter(username,password,company_name):
     newRecruiter = Recruiter(username,password,company_name)
     db.session.add(newRecruiter)
     db.session.commit()
-    print(newRecruiter.id)
-    return newRecruiter
+    
+    
 
 def list_created_jobs(recruiter_id):
     recruiter = Recruiter.query.get(recruiter_id)   
