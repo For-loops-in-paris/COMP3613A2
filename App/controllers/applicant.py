@@ -23,7 +23,7 @@ def apply_to_job(job_id,applicant_id):
     application = create_application(job_id,applicant_id)
     if application:
         return 'Application successful'
-    return "Application failed"
+    return "Either the application already exists, the user is not an applicant, or the application couldn't be made"
 
 def view_applications(applicant_id):
     applicant = Applicant.query.get(applicant_id)
