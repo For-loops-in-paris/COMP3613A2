@@ -30,6 +30,7 @@ def identify_page():
 @auth_views.route('/login', methods=['POST'])
 def login_action():
     data = request.form
+    print(data['username'])
     token = login(data['username'], data['password'])
     response = redirect(request.referrer)
     if not token:

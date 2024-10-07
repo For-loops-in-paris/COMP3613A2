@@ -5,3 +5,5 @@ from .recruiter import *
 from .job import *
 from .applicant import *
 from .application import *
+from .admin import *
+from .company import *

@@ -2,8 +2,8 @@ from App.models import Recruiter
 from App.database import db
 
 
-def create_recruiter(username,password,company_name):
-    newRecruiter = Recruiter(username,password,company_name)
+def create_recruiter(username,password,email):
+    newRecruiter = Recruiter(username,password,email)
     db.session.add(newRecruiter)
     db.session.commit()
     
