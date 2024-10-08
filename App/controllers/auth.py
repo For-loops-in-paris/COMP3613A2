@@ -4,7 +4,7 @@ from flask import render_template
 
 
 from functools import wraps
-from App.models import User, Applicant, Recruiter
+from App.models import User, Applicant, Recruiter, Admin
 
 def login(username, password):
   user = User.query.filter_by(username=username).first()
@@ -12,6 +12,25 @@ def login(username, password):
     return create_access_token(identity=username)
   return None
 
+def setup_flask_login(app):
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        user = Admin.query.get(user_id)
+
+        if user:
+            return user
+        
+        user = Recruiter.query.get(user_id)
+
+        if user:
+            return user
+
+        return Applicant.query.get(user_id)
+    
+    return login_manager
 
 def setup_jwt(app):
   jwt = JWTManager(app)
@@ -19,7 +38,15 @@ def setup_jwt(app):
   # configure's flask jwt to resolve get_current_identity() to the corresponding user's ID
   @jwt.user_identity_loader
   def user_identity_lookup(identity):
-    user = User.query.filter_by(username=identity).one_or_none()
+    user = Admin.query.filter_by(username=identity).one_or_none()
+    if user:
+        return user.id
+    
+    user = Recruiter.query.filter_by(username=identity).one_or_none()
+    if user:
+        return user.id
+    
+    user = Applicant.query.filter_by(username=identity).one_or_none()
     if user:
         return user.id
     return None
@@ -36,7 +63,7 @@ def applicant_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not current_user.is_authenticated or not isinstance(current_user, Applicant):
-            return render_template("unauthorized.html"), 401
+            return render_template("401.html"), 401
         return func(*args, **kwargs)
     return wrapper
 
@@ -44,7 +71,7 @@ def recruiter_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not current_user.is_authenticated or not isinstance(current_user, Recruiter):
-            return render_template("unauthorized.html"), 401
+            return render_template("401.html"), 401
         return func(*args, **kwargs)
     return wrapper
 
@@ -55,7 +82,11 @@ def add_auth_context(app):
       try:
           verify_jwt_in_request()
           user_id = get_jwt_identity()
-          current_user = User.query.get(user_id)
+          current_user = Admin.query.get(user_id)
+          if not current_user:
+            current_user = Recruiter.query.get(user_id)
+          if not current_user:
+            current_user = Applicant.query.get(user_id)
           is_authenticated = True
       except Exception as e:
           print(e)
