@@ -1,6 +1,10 @@
+from flask_login import login_user, login_manager, logout_user, LoginManager, current_user
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity, verify_jwt_in_request
+from flask import render_template
 
-from App.models import User
+
+from functools import wraps
+from App.models import User, Applicant, Recruiter
 
 def login(username, password):
   user = User.query.filter_by(username=username).first()
@@ -27,6 +31,22 @@ def setup_jwt(app):
 
   return jwt
 
+#wrappers 
+def applicant_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Applicant):
+            return render_template("unauthorized.html"), 401
+        return func(*args, **kwargs)
+    return wrapper
+
+def recruiter_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Recruiter):
+            return render_template("unauthorized.html"), 401
+        return func(*args, **kwargs)
+    return wrapper
 
 # Context processor to make 'is_authenticated' available to all templates
 def add_auth_context(app):
