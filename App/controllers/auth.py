@@ -7,8 +7,20 @@ from functools import wraps
 from App.models import User, Applicant, Recruiter, Admin
 
 def login(username, password):
-  user = User.query.filter_by(username=username).first()
+
+  user = Admin.query.filter_by(username=username).first()
   if user and user.check_password(password):
+    login_user(user)
+    return create_access_token(identity=username)
+  
+  user = Recruiter.query.filter_by(username=username).first()
+  if user and user.check_password(password):
+    login_user(user)
+    return create_access_token(identity=username)
+  
+  user = Applicant.query.filter_by(username=username).first()
+  if user and user.check_password(password):
+    login_user(user)
     return create_access_token(identity=username)
   return None
 
@@ -83,6 +95,7 @@ def add_auth_context(app):
           verify_jwt_in_request()
           user_id = get_jwt_identity()
           current_user = Admin.query.get(user_id)
+          
           if not current_user:
             current_user = Recruiter.query.get(user_id)
           if not current_user:

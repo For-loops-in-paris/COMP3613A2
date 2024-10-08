@@ -1,6 +1,4 @@
-from App.models import Application
-from App.models import Applicant
-from App.models import Job
+from App.models import Application, Applicant,Job
 from sqlalchemy.exc import IntegrityError
 
 

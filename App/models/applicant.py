@@ -2,7 +2,6 @@ from App.database import db
 from .user import User
 
 class Applicant(User):
-    __tablename__ = 'applicant'
     id = db.Column(db.Integer, db.ForeignKey('user.id'),primary_key=True)
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120),nullable=False)
