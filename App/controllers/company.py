@@ -7,6 +7,8 @@ def create_company(company_name,company_logo):
         newCompany = Company(company_name,company_logo)
         db.session.add(newCompany)
         db.session.commit()
+        return True
     except IntegrityError:
         db.session.rollback()
+        return False
 

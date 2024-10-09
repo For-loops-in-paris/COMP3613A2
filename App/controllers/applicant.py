@@ -9,9 +9,11 @@ def create_applicant(username,password,first_name,last_name,phone_number,email_a
         newApplicant = Applicant(username,password,first_name,last_name,phone_number,email_address)
         db.session.add(newApplicant)
         db.session.commit()
-        return f'Applicant {first_name} {last_name} was successfuly created'
+        print(f'Applicant {first_name} {last_name} was successfuly created')
+        return True
     except IntegrityError:
-        return f'Applicant {first_name} {last_name} could not be created'
+        print( f'Applicant {first_name} {last_name} could not be created')
+        return False
 
 
 def view_jobs():

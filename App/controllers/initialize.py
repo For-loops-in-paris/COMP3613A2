@@ -10,11 +10,12 @@ from App.database import db
 def initialize():
     db.drop_all()
     db.create_all()
-    create_admin("bob","bobpass","bob@mail.com")
+    create_recruiter("bob","bobpass","bob@mail.com")
     create_company('Google','https://cdn2.hubspot.net/hubfs/53/image8-2.jpg')
     create_company('Amazon','https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png')
     create_recruiter('Carl','Carlpass','carl@mail.com')
     create_recruiter('Rickyy23','Rickpass','ricky@mail.com')
+    assign_recruiter(1,1)
     assign_recruiter(2,1)
     assign_recruiter(3,2)
     create_applicant('Johnboy123','Johnpass','John','Doe',413-2242,'john@mail.com')
