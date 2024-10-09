@@ -10,6 +10,7 @@ def create_application(job_id,applicant_id):
         return False
         
     if not Applicant.query.get(applicant_id):
+        
         return False
     try:
         application = Application(job_id,applicant_id)

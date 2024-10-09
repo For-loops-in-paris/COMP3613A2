@@ -14,6 +14,6 @@ def create_application_action():
     data=request.json
     application = create_application(data['job_id'], data['applicant_id'])
     if application:
-        return jsonify({"message": "Application created successfully"}), 201
+        return jsonify({"message":"Application created successfully"}), 201
     else:
-        return jsonify({"message":"Application failed."}), 400
+        return jsonify({"message":"Application creation failed"}), 400
