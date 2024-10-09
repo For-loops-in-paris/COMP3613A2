@@ -9,6 +9,9 @@ def create_application(job_id,applicant_id):
     if Application.query.filter_by(job_id=job_id,applicant_id=applicant_id).first() != None:
         return False
         
+    if ((isinstance(job_id,str) and not job_id.isdigit()) or(isinstance(applicant_id,str) and not applicant_id.isdigit()) ):
+        return False
+        
     try:
         application = Application(job_id,applicant_id)
         db.session.add(application)

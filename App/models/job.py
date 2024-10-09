@@ -14,7 +14,7 @@ class Job(db.Model):
         self.salary = salary
 
     def __repr__(self):
-        return f'Job ID: {self.id} Company: {self.recruiter.company_name} Position: {self.position} Salary: {self.salary}'
+        return f'Job ID: {self.id} Company: {self.recruiter.company.company_name} Position: {self.position} Salary: {self.salary}'
      
 
     
