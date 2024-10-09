@@ -10,10 +10,10 @@ from App.controllers import(
 applicant_views = Blueprint('applicant_views', __name__, template_folder='../templates')
 
 @applicant_views.route('/create_application', methods=['POST'])
-def create_applicant():
+def create_application_action():
     data=request.json
     application = create_application(data['job_id'], data['applicant_id'])
     if application:
-        return jsonify({"message": "Application made."}), 201
+        return jsonify({"message": "Application created successfully"}), 201
     else:
         return jsonify({"message":"Application failed."}), 400
