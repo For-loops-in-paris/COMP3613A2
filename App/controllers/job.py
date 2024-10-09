@@ -10,9 +10,9 @@ def create_job(recruiter_id,position, salary):
     if not recruiter_id or not position or not salary:
         return False
     
-
-    if salary.isdigit():
-        salary = int(salary)
+    if isinstance(salary,str):
+        if salary.isdigit():
+            salary = int(salary)
     else:
         return False
     if isinstance(recruiter_id,str):

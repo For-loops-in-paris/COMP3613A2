@@ -20,6 +20,19 @@ def create_application(job_id,applicant_id):
         return False
     return True
 
+def withdraw_application(job_id, applicant_id):
+    application = Application.query.filter_by(job_id=job_id, applicant_id=applicant_id).first()
+
+    if not application:    
+        print(f'Application not found.')
+        return False
+    else: 
+        db.session.delete(application)
+        db.commit()
+        return True
+
+            
+            
 # def list_all_applications():
 #     app = Application.query.all()
 #     for a in app:
