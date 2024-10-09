@@ -21,6 +21,8 @@ recruiter_views = Blueprint('recruiter_views', __name__, template_folder='../tem
 # @recruiter_required
 def create_job_action():
     data = request.json
+    if len (data)!= 3:
+        return jsonify({"message":"Job creation failed"}), 400
     job = create_job(data['recruiter_id'],data['position'],data['salary'])
     if job:
         return jsonify({"message":"Job created successfully"}), 201
