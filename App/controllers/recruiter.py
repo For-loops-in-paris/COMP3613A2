@@ -1,12 +1,18 @@
 from App.models import Recruiter
 from App.database import db
+from sqlalchemy.exc import IntegrityError
+
 
 
 def create_recruiter(username,password,email):
-    newRecruiter = Recruiter(username,password,email)
-    db.session.add(newRecruiter)
-    db.session.commit()
-    
+    try:
+        newRecruiter = Recruiter(username,password,email)
+        db.session.add(newRecruiter)
+        db.session.commit()
+        return True
+    except IntegrityError:
+        db.session.rollback()
+        return False    
     
 
 def list_created_jobs(recruiter_id):

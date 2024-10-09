@@ -5,16 +5,17 @@ from App.controllers.auth import recruiter_required
 
 
 from App.controllers import(
-    create_job
+    create_job, 
+    create_recruiter
 )
 
 recruiter_views = Blueprint('recruiter_views', __name__, template_folder='../templates')
 
 
-@recruiter_views.route('/create_job',methods=['GET'])
-# @recruiter_required
-def create_job_page():
-    test = create_job()
+# @recruiter_views.route('/create_job',methods=['GET'])
+# # @recruiter_required
+# def create_job_page():
+#     test = create_job()
 
 @recruiter_views.route('/create_job',methods=['POST'])
 # @recruiter_required
@@ -24,5 +25,17 @@ def create_job_action():
     if job:
         return jsonify({"message":"Job created successfully"}), 201
     else:
-        return jsonify({"message":"Job creation failed"}), 400
-   
+        return jsonify({"message":"Job creation failed"}), 400  
+    
+
+@recruiter_views.route('/create_recruiter',methods=['POST'])
+# @recruiter_required
+def create_recruiter_action():
+    data = request.json 
+    if len (data)!= 3:
+        return jsonify({"message":"Recruiter creation failed"}), 400
+    recruiter = create_recruiter(data['username'],data['password'],data['email'])
+    if recruiter:
+        return jsonify({"message":"Recruiter created successfully"}), 201
+    else:
+        return jsonify({"message":"Recruiter creation failed"}), 400
