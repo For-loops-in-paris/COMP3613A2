@@ -21,6 +21,13 @@ def view_jobs():
     for job in jobs:
         print(job)
 
+def view_jobs_json():
+    jobs = Job.query.all()
+    
+    li = [job.get_json()for job in jobs]
+  
+    return li
+
 def apply_to_job(job_id,applicant_id):
     application = create_application(job_id,applicant_id)
     if application:

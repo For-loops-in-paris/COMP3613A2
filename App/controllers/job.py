@@ -4,23 +4,14 @@ from App.models import Application
 from App.models import Recruiter
 from sqlalchemy.exc import IntegrityError
 
-def create_job(recruiter_id,position, salary):
+def create_job(recruiter_id,position,description, salary):
    
     #Verifies that the recruiter id is a valid digit and converts it to an integer
-    if not recruiter_id or not position or not salary:
-        return False
-    if isinstance(salary,str):
-        if salary.isdigit():
-            salary = int(salary)
-        else:
+    if ((isinstance(salary,str) and not salary.isdigit())or (isinstance(recruiter_id,str) and not recruiter_id.isdigit())):
             return False
     
-    if isinstance(recruiter_id,str):
-        if recruiter_id.isdigit():
-            recruiter_id = int(recruiter_id)
-        else:
-           print (f'Please enter a digit for the recruiter id')
-           return False
+    salary = int(salary)
+    recruiter_id = int(recruiter_id)
 
     if not Recruiter.query.get(recruiter_id):
         print ('Please enter a valid recruiter id')
@@ -28,7 +19,7 @@ def create_job(recruiter_id,position, salary):
     
    
     try:
-        job = Job(recruiter_id,position,salary)
+        job = Job(recruiter_id,position,description,salary)
         db.session.add(job)
         db.session.commit()
     except IntegrityError:

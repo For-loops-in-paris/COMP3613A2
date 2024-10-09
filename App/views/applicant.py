@@ -5,10 +5,18 @@ from App.controllers.auth import applicant_required
 
 from App.controllers import(
     create_application,
-    withdraw_application
+    withdraw_application,
+    view_jobs_json
 )
 
 applicant_views = Blueprint('applicant_views', __name__, template_folder='../templates')
+
+ 
+@applicant_views.route('/view_jobs', methods=['GET'])
+def view_job_listings():
+    print("asd")
+    return jsonify(view_jobs_json()), 200
+
 
 @applicant_views.route('/create_application', methods=['POST'])
 def create_application_action():
