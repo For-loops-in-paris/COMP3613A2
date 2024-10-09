@@ -9,12 +9,12 @@ def create_job(recruiter_id,position, salary):
     #Verifies that the recruiter id is a valid digit and converts it to an integer
     if not recruiter_id or not position or not salary:
         return False
-    
     if isinstance(salary,str):
         if salary.isdigit():
             salary = int(salary)
-    else:
-        return False
+        else:
+            return False
+    
     if isinstance(recruiter_id,str):
         if recruiter_id.isdigit():
             recruiter_id = int(recruiter_id)
