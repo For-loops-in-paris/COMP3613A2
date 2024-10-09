@@ -4,7 +4,8 @@ from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, se
 from App.controllers.auth import applicant_required
 
 from App.controllers import(
-    create_application
+    create_application,
+    withdraw_application
 )
 
 applicant_views = Blueprint('applicant_views', __name__, template_folder='../templates')
@@ -17,3 +18,12 @@ def create_application_action():
         return jsonify({"message":"Application created successfully"}), 201
     else:
         return jsonify({"message":"Application creation failed"}), 400
+    
+
+@applicant_views.route('/withdraw_application', methods=['DELETE'])
+def withdraw_application_action():
+    data=request.json
+    if withdraw_application(data['job_id'], data['applicant_id']):
+        return jsonify({"message":"Application deleted successfully"}), 200
+    else:
+        return jsonify({"message":"Application delete failed"}), 400

@@ -26,7 +26,7 @@ def withdraw_application(job_id, applicant_id):
         return False
     else: 
         db.session.delete(application)
-        db.commit()
+        db.session.commit()
         return True
 
             
