@@ -13,8 +13,10 @@ def create_admin(username,password,email):
         newAdmin = Admin( username,password,email)
         db.session.add(newAdmin)
         db.session.commit()
+        return True
     except IntegrityError:
         db.session.rollback()
+        return False
 
 def assign_recruiter(recruiter_id,company_id):
     company = Company.query.get(company_id)
