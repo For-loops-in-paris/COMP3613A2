@@ -6,7 +6,8 @@ from App.controllers.auth import applicant_required
 from App.controllers import(
     create_application,
     withdraw_application,
-    view_jobs_json
+    view_jobs_json,
+    is_applicant
 )
 
 applicant_views = Blueprint('applicant_views', __name__, template_folder='../templates')
@@ -19,6 +20,7 @@ def view_job_listings():
 
 
 @applicant_views.route('/create_application', methods=['POST'])
+@applicant_required
 def create_application_action():
     data=request.json
     application = create_application(data['job_id'], data['applicant_id'])
@@ -29,6 +31,7 @@ def create_application_action():
     
 
 @applicant_views.route('/withdraw_application', methods=['DELETE'])
+@applicant_required
 def withdraw_application_action():
     data=request.json
     if withdraw_application(data['job_id'], data['applicant_id']):

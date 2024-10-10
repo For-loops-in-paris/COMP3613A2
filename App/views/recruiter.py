@@ -18,7 +18,8 @@ recruiter_views = Blueprint('recruiter_views', __name__, template_folder='../tem
 #     test = create_job()
 
 @recruiter_views.route('/create_job',methods=['POST'])
-# @recruiter_required
+@recruiter_required
+@jwt_required()
 def create_job_action():
     data = request.json
     if len (data)!= 4:
