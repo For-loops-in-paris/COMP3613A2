@@ -6,8 +6,7 @@ from App.controllers.auth import applicant_required
 from App.controllers import(
     create_application,
     withdraw_application,
-    view_jobs_json,
-    is_applicant
+    view_jobs_json
 )
 
 applicant_views = Blueprint('applicant_views', __name__, template_folder='../templates')

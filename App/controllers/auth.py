@@ -89,6 +89,16 @@ def recruiter_required(func):
         return func(*args, **kwargs)
     return wrapper
 
+def admin_required(func):
+    @wraps(func)
+    
+    def wrapper(*args, **kwargs):
+        if not current_user.is_authenticated or not isinstance(current_user, Admin):
+            return jsonify(message="User not authorised")
+        return func(*args, **kwargs)
+    return wrapper
+
+
 # Context processor to make 'is_authenticated' available to all templates
 def add_auth_context(app):
   @app.context_processor

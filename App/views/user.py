@@ -7,7 +7,9 @@ from App.controllers import (
     create_user,
     get_all_users,
     get_all_users_json,
-    jwt_required
+    jwt_required,
+    admin_required,
+    create_company
 )
 
 user_views = Blueprint('user_views', __name__, template_folder='../templates')
@@ -38,3 +40,16 @@ def create_user_endpoint():
 @user_views.route('/static/users', methods=['GET'])
 def static_user_page():
   return send_from_directory('static', 'static-user.html')
+
+@user_views.route('/create_company',methods=['POST'])
+@jwt_required()
+@admin_required
+def create_admin_action():
+    data = request.json 
+    if len (data)!= 2:
+        return jsonify({"message":"Company creation failed"}), 400
+    company = create_company(data['company_name'],data['company_logo'])
+    if company:
+        return jsonify({"message":"Company created successfully"}), 201
+    else:
+        return jsonify({"message":"Company creation failed"}), 400

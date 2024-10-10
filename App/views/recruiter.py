@@ -1,12 +1,14 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_login import login_user, login_manager, logout_user, LoginManager, current_user
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
-from App.controllers.auth import recruiter_required
+from App.controllers.auth import recruiter_required, admin_required
+
 
 
 from App.controllers import(
     create_job, 
-    create_recruiter
+    create_recruiter,
+    create_company
 )
 
 recruiter_views = Blueprint('recruiter_views', __name__, template_folder='../templates')
@@ -42,3 +44,5 @@ def create_recruiter_action():
         return jsonify({"message":"Recruiter created successfully"}), 201
     else:
         return jsonify({"message":"Recruiter creation failed"}), 400
+    
+
