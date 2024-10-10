@@ -1,6 +1,7 @@
 from flask_login import login_user, login_manager, logout_user, LoginManager, current_user
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager, get_jwt_identity, verify_jwt_in_request
-from flask import render_template
+from flask import render_template, jsonify
+from datetime import datetime
 
 
 from functools import wraps
@@ -11,18 +12,19 @@ def login(username, password):
   user = Admin.query.filter_by(username=username).first()
   if user and user.check_password(password):
     login_user(user)
-    return create_access_token(identity=username)
+    return create_access_token(identity=username,additional_claims={"iat":datetime.now()})
   
   user = Recruiter.query.filter_by(username=username).first()
   if user and user.check_password(password):
     login_user(user)
-    return create_access_token(identity=username)
+    return create_access_token(identity=username,additional_claims={"iat":datetime.now()})
   
   user = Applicant.query.filter_by(username=username).first()
   if user and user.check_password(password):
     login_user(user)
-    return create_access_token(identity=username)
+    return create_access_token(identity=username,additional_claims={"iat":datetime.now()})
   return None
+
 
 def setup_flask_login(app):
     login_manager = LoginManager()
@@ -75,7 +77,7 @@ def applicant_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not current_user.is_authenticated or not isinstance(current_user, Applicant):
-            return render_template("401.html"), 401
+            return jsonify(message="User not authorised")
         return func(*args, **kwargs)
     return wrapper
 
@@ -83,7 +85,7 @@ def recruiter_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not current_user.is_authenticated or not isinstance(current_user, Recruiter):
-            return render_template("401.html"), 401
+            return jsonify(message="User not authorised")
         return func(*args, **kwargs)
     return wrapper
 
