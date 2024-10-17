@@ -12,6 +12,16 @@ class Application(db.Model):
     def __init__(self,job_id,applicant_id):
         self.job_id = job_id
         self.applicant_id = applicant_id
+
+    def get_json(self):
+        return {
+        "id": self.id,
+        "job_id": self.job_id,
+        "applicant_id": self.applicant_id,
+        "application_date": self.application_date.isoformat(),
+        "application_status": self.application_status
+    }
+
     
 
     def __repr__(self):

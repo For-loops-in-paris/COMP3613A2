@@ -3,6 +3,7 @@ from .application import create_application
 from App.models import Job
 from App.models import Applicant
 from sqlalchemy.exc import IntegrityError
+from App.models import Application
 
 def create_applicant(username,password,first_name,last_name,phone_number,email_address):
     try:
@@ -42,6 +43,16 @@ def view_applications(applicant_id):
             print(application)
     else:
         print("FAIL")
+
+def view_applications_json(applicant_id):
+    applications = Application.query.all()
+    
+    li = [application.get_json()for application in applications]
+  
+    return li
+
+
+
 
 
     

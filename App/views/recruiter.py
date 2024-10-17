@@ -8,7 +8,8 @@ from App.controllers.auth import recruiter_required, admin_required
 from App.controllers import(
     create_job, 
     create_recruiter,
-    create_company
+    create_company,
+    
 )
 
 recruiter_views = Blueprint('recruiter_views', __name__, template_folder='../templates')
@@ -44,5 +45,8 @@ def create_recruiter_action():
         return jsonify({"message":"Recruiter created successfully"}), 201
     else:
         return jsonify({"message":"Recruiter creation failed"}), 400
+    
+
+
     
 
