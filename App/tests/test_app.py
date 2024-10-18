@@ -155,13 +155,12 @@ class UsersIntegrationTests(unittest.TestCase):
     def test_11_withdraw_application(self):
         job = get_job(1)
         applicant = get_user_by_username("BruceWayne")
-        #create_applicant("Tommy", "toepass", "Tomla", "stNae", "456-9535", "tom@wayne.com")
-        #secapp = get_user_by_username("Tommy")
-        #apply_to_job(job.id, secapp.id)
-        #print(view_applicants_json(job.id))
+        applicants_before_withdraw = view_applicants_json(job.id)
+        assert {"id": applicant.id, "username": applicant.username} in applicants_before_withdraw
         withdraw_result = withdraw_application(job.id, applicant.id)
-        #print(view_applicants_json(job.id))
         assert withdraw_result == True
+        applicants_after_withdraw = view_applicants_json(job.id)
+        assert {"id": applicant.id, "username": applicant.username} not in applicants_after_withdraw
         
     def test_12_job_get_json(self):
         new_job = get_job(1)

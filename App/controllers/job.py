@@ -42,11 +42,12 @@ def view_applicants(job_id):
         print('No job exists with the specified id')
 
 def view_applicants_json(job_id):
-    applicants = Applicant.query.all()
-    
-    li = [applicant.get_json()for applicant in applicants]
-  
-    return li
+    job = Job.query.get(job_id)
+    if job and job.applicants:
+        li = [applicant.get_json() for applicant in job.applicants]
+        return li
+    else:
+        return []
 
 def get_job(id):
     return Job.query.get(id)
