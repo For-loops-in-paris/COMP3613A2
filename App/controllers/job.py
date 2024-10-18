@@ -3,6 +3,7 @@ from App.models import Job
 from App.models import Application
 from App.models import Recruiter
 from sqlalchemy.exc import IntegrityError
+from App.models import Applicant
 
 def create_job(recruiter_id,position,description, salary):
    
@@ -39,4 +40,11 @@ def view_applicants(job_id):
             print(applicant)
     else:
         print('No job exists with the specified id')
+
+def view_applicants_json(job_id):
+    applicants = Applicant.query.all()
+    
+    li = [applicant.get_json()for applicant in applicants]
+  
+    return li
 

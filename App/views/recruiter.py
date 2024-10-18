@@ -9,6 +9,8 @@ from App.controllers import(
     create_job, 
     create_recruiter,
     create_company,
+    view_applicants,
+    view_applicants_json
     
 )
 
@@ -45,6 +47,13 @@ def create_recruiter_action():
         return jsonify({"message":"Recruiter created successfully"}), 201
     else:
         return jsonify({"message":"Recruiter creation failed"}), 400
+    
+
+@recruiter_views.route('/list_applicants', methods=['GET'])
+def view_applicant_listings():
+    data=request.json
+    print("asd")
+    return jsonify(view_applicants_json(data['job_id'])), 200
     
 
 
