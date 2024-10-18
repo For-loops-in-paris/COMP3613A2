@@ -48,3 +48,5 @@ def view_applicants_json(job_id):
   
     return li
 
+def get_job(id):
+    return Job.query.get(id)

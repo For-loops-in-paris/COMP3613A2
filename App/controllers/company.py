@@ -12,3 +12,5 @@ def create_company(company_name,company_logo):
         db.session.rollback()
         return False
 
+def get_company(company_id):
+    return Company.query.get(company_id)
