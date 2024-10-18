@@ -24,6 +24,13 @@ def list_created_jobs(recruiter_id):
     else:
      print("The recruiter does not exist") 
 
+def get_recruiter(recruiter_id):
+    recruiter = Recruiter.query.get(recruiter_id)
+    if recruiter:
+        return recruiter
+    return None
+
+
 
 
 

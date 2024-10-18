@@ -8,9 +8,9 @@ from App.controllers.auth import recruiter_required, admin_required
 from App.controllers import(
     create_job, 
     create_recruiter,
-    create_company,
-    view_applicants,
-    view_applicants_json
+    view_applicants_json,
+    list_company_jobs_json,
+    get_recruiter
     
 )
 
@@ -47,6 +47,17 @@ def create_recruiter_action():
         return jsonify({"message":"Recruiter created successfully"}), 201
     else:
         return jsonify({"message":"Recruiter creation failed"}), 400
+    
+
+@recruiter_views.route('/list_company_jobs',methods=['POST'])
+@recruiter_required
+def company_job_listings():
+    data = request.json
+    recruiter = get_recruiter(data['recruiter_id'])
+    if len(data)!=1 or not recruiter:
+        return jsonify(message='Company listing failed'),400
+    
+    return jsonify(list_company_jobs_json(recruiter.company_id)), 200
     
 
 @recruiter_views.route('/list_applicants', methods=['GET'])

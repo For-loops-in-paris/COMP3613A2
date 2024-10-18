@@ -44,5 +44,4 @@ def withdraw_application_action():
 @applicant_views.route('/view_applications', methods=['GET'])
 def view_applications_listings():
     data=request.json
-    print("asd")
     return jsonify(view_applications_json(data['applicant_id'])), 200

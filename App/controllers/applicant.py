@@ -44,10 +44,12 @@ def view_applications(applicant_id):
     else:
         print("FAIL")
 
-def view_applications_json(applicant_id):
-    applications = Application.query.all()
-    
-    li = [application.get_json()for application in applications]
+def view_applications_json(id):
+    applications = Application.query.filter(Application.applicant_id==id).all()
+
+    li = []
+    if applications:
+        li = [application.get_json()for application in applications]
   
     return li
 
