@@ -8,7 +8,9 @@ from App.controllers import(
     withdraw_application,
     view_jobs_json,
     apply_to_job,
-    view_applications_json
+    view_applications_json,
+    create_applicant,
+    delete_applicant
 )
 
 applicant_views = Blueprint('applicant_views', __name__, template_folder='../templates')
@@ -30,7 +32,31 @@ def create_application_action():
     else:
         return jsonify({"message":"Application creation failed"}), 400
     
+@applicant_views.route('/create_applicant',methods=['POST'])
+# @recruiter_required
+def create_applicant_action():
+    data = request.json 
+    if len (data)!= 6:
+        return jsonify({"message":"Applicant creation failed"}), 400
+    applicant = create_applicant(data['username'],data['password'],data['first_name'],data['last_name'],data['phone_number'],data['email'])
+    if applicant:
+        return jsonify({"message":"Applicant created successfully"}), 201
+    else:
+        return jsonify({"message":"Applicant creation failed"}), 400
+    
 
+@applicant_views.route('/delete_applicant',methods=['DELETE'])
+@applicant_required
+def delete_applicant_action():
+    data = request.json 
+    if len (data)!= 1:
+        return jsonify({"message":"Applicant deletion failed"}), 400
+    recruiter = delete_applicant(data['applicant_id'])
+    if recruiter:
+        return jsonify({"message":"Applicant deleted successfully"}), 201
+    else:
+        return jsonify({"message":"Applicant deletion failed"}), 400
+    
 @applicant_views.route('/withdraw_application', methods=['DELETE'])
 @applicant_required
 def withdraw_application_action():

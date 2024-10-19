@@ -25,6 +25,7 @@ def assign_recruiter(recruiter_id,company_id):
         recruiter.company_id=company_id
         company.recruiters.append(recruiter)
         db.session.commit()
-        print(recruiter)
+        return True
     else:
         print("Either the recruiter id or company id is invalid")
+        return False

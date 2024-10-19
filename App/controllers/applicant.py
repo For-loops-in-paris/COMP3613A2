@@ -16,6 +16,15 @@ def create_applicant(username,password,first_name,last_name,phone_number,email_a
         print( f'Applicant {first_name} {last_name} could not be created')
         return False
 
+def delete_applicant(applicant_id):
+    try:
+        applicant = Applicant.query.get(applicant_id)
+        db.session.delete(applicant)
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False
 
 def view_jobs():
     jobs = Job.query.all()

@@ -10,7 +10,8 @@ from App.controllers import(
     create_recruiter,
     view_applicants_json,
     list_company_jobs_json,
-    get_recruiter
+    get_recruiter,
+    delete_recruiter
     
 )
 
@@ -47,6 +48,19 @@ def create_recruiter_action():
         return jsonify({"message":"Recruiter created successfully"}), 201
     else:
         return jsonify({"message":"Recruiter creation failed"}), 400
+    
+
+@recruiter_views.route('/delete_recruiter',methods=['DELETE'])
+@recruiter_required
+def delete_recruiter_action():
+    data = request.json 
+    if len (data)!= 1:
+        return jsonify({"message":"Recruiter deletion failed"}), 400
+    recruiter = delete_recruiter(data['recruiter_id'])
+    if recruiter:
+        return jsonify({"message":"Recruiter deleted successfully"}), 201
+    else:
+        return jsonify({"message":"Recruiter deletion failed"}), 400
     
 
 @recruiter_views.route('/list_company_jobs',methods=['POST'])

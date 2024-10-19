@@ -24,5 +24,6 @@ def initialize():
     create_applicant('Suzieboy123','Suziepass','Suzie','Doe',413-2242,'suzie@mail.com')
     create_job(1,'Plumber',"Fixes Pipes",2520)
     create_job(1,'Tinkerer',"Manipulates objects",2520)
+    
     create_job(3,'Masseus',"Massages People",2520)
     

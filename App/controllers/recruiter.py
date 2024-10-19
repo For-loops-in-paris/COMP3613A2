@@ -14,6 +14,16 @@ def create_recruiter(username,password,email):
         db.session.rollback()
         return False    
     
+def delete_recruiter(recruiter_id):
+    try:
+        recruiter = Recruiter.query.get(recruiter_id)
+        db.session.delete(recruiter)
+        db.session.commit()
+        return True
+    except Exception:
+        db.session.rollback()
+        return False
+
 
 def list_created_jobs(recruiter_id):
     recruiter = Recruiter.query.get(recruiter_id)   
