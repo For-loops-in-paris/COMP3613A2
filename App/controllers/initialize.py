@@ -15,7 +15,6 @@ def initialize():
     create_company('Amazon','https://www.hatchwise.com/wp-content/uploads/2022/05/amazon-logo-1024x683.png')
     create_recruiter('Carl','Carlpass','carl@mail.com')
     create_recruiter('Rickyy23','Rickpass','ricky@mail.com')
-    assign_recruiter(1,1)
     assign_recruiter(2,1)
     assign_recruiter(3,2)
     create_applicant('Johnboy123','Johnpass','John','Doe',413-2242,'john@mail.com')
@@ -24,6 +23,6 @@ def initialize():
     create_applicant('Suzieboy123','Suziepass','Suzie','Doe',413-2242,'suzie@mail.com')
     create_job(1,'Plumber',"Fixes Pipes",2520)
     create_job(1,'Tinkerer',"Manipulates objects",2520)
-    
+
     create_job(3,'Masseus',"Massages People",2520)
     
